@@ -46,8 +46,8 @@ def main():
                 print("SEMICOLON ; null")
             case "\n":
                 line += 1
-            case _:
-                print(f"[line {line}] Error: Unexpected character: {c}", file=sys.stderr)
+            # case _:
+            #     print(f"[line {line}] Error: Unexpected character: {c}", file=sys.stderr)
 
     print("EOF  null") # Placeholder, remove this line when implementing the scanner
 
