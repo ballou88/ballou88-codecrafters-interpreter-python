@@ -1,5 +1,25 @@
 import sys
+import scanner
 
+VALID_CHARACTERS = {
+    "(": "LEFT_PAREN",
+    ")": "RIGHT_PAREN",
+    "{": "LEFT_BRACE",
+    "}": "RIGHT_BRACE",
+    "+": "PLUS",
+    "-": "MINUS",
+    "*": "STAR",
+    "/": "SLASH",
+    ".": "DOT",
+    ",": "COMMA",
+    ";": "SEMICOLON",
+}
+
+def print_error(line, character):
+    print(f"[line {line}] Error: Unexpected character: {character}", file=sys.stderr)
+
+def print_match(character):
+    print(f"{VALID_CHARACTERS[character]} {character} null")
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -18,42 +38,12 @@ def main():
 
     with open(filename) as file:
         file_contents = file.read()
-
-    line = 1
-    has_lex_error = False
-    for c in file_contents:
-        match c:
-            case "(":
-                print("LEFT_PAREN ( null")
-            case ")":
-                print("RIGHT_PAREN ) null")
-            case "{":
-                print("LEFT_BRACE { null")
-            case "}":
-                print("RIGHT_BRACE } null")
-            case "+":
-                print("PLUS + null")
-            case "-":
-                print("MINUS - null")
-            case "*":
-                print("STAR * null")
-            case "/":
-                print("SLASH / null")
-            case ".":
-                print("DOT . null")
-            case ",":
-                print("COMMA , null")
-            case ";":
-                print("SEMICOLON ; null")
-            case "\n":
-                line += 1
-            case _:
-                has_lex_error = True
-                print(f"[line {line}] Error: Unexpected character: {c}", file=sys.stderr)
-
+    scanner = Scanner(file_contents)
+    scanner.scan_tokens()
     print("EOF  null") # Placeholder, remove this line when implementing the scanner
     if has_lex_error:
         sys.exit(65)
+
 
 
 if __name__ == "__main__":
