@@ -19,11 +19,14 @@ def main():
     with open(filename) as file:
         file_contents = file.read()
 
-    # Uncomment this block to pass the first stage
-    if file_contents:
-        raise NotImplementedError("Scanner not implemented")
-    else:
-        print("EOF  null") # Placeholder, remove this line when implementing the scanner
+    for c in file_contents:
+        match c:
+            case "(":
+                print("LEFT_PAREN ( null")
+            case ")":
+                print("RIGHT_PAREN ) null")
+
+    print("EOF  null") # Placeholder, remove this line when implementing the scanner
 
 
 if __name__ == "__main__":
