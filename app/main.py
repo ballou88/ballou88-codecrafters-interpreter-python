@@ -29,6 +29,21 @@ def main():
                 print("LEFT_BRACE { null")
             case "}":
                 print("RIGHT_BRACE } null")
+            case "+":
+                print("PLUS + null")
+            case "-":
+                print("MINUS - null")
+            case "*":
+                print("STAR * null")
+            case "/":
+                print("SLASH / null")
+            case ".":
+                print("DOT . null")
+            case ",":
+                print("COMMA , null")
+            case ";":
+                print("SEMICOLON ; null")
+
     print("EOF  null") # Placeholder, remove this line when implementing the scanner
 
 
