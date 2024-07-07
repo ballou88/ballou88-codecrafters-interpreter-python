@@ -19,6 +19,7 @@ def main():
     with open(filename) as file:
         file_contents = file.read()
 
+    line = 1
     for c in file_contents:
         match c:
             case "(":
@@ -43,6 +44,10 @@ def main():
                 print("COMMA , null")
             case ";":
                 print("SEMICOLON ; null")
+            case "\n":
+                line += 1
+            case _:
+                print(f"[line {line}] Error: Unexpected character: {c}", file=sys.stderr)
 
     print("EOF  null") # Placeholder, remove this line when implementing the scanner
 
