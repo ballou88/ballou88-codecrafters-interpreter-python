@@ -1,7 +1,7 @@
 from app.token_type import TokenType
 from app.token import Token
 
-NUMBER_LITERALS  = ['1','2','3','4','5','6','7','8','9','0','.']
+NUMBER_LITERALS  = ['1','2','3','4','5','6','7','8','9','0']
 class Scanner:
     def __init__(self, source, error_class):
         self.source = source
@@ -107,9 +107,17 @@ class Scanner:
     def number(self):
         while num := self.peek() in NUMBER_LITERALS:
             self.advance()
-        value = self.source[self.start + 1: self.current - 1]
-        self.addToken(TokenType.NUMBER, value)
+        if self.peek() == '.' and self.peek_next() in NUMBER_LITERALS:
+            self.advance()
+            while self.peek() in NUMBER_LITERALS:
+                self.advance()
+        value = self.source[self.start: self.current]
+        self.addToken(TokenType.NUMBER, str(float(value)))
 
+    def peek_next(self):
+        if self.current + 1 >= len(self.source):
+            return '\0'
+        return self.source[self.current + 1]
 
     def advance(self):
         character = self.source[self.current]
