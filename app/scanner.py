@@ -25,55 +25,55 @@ class Scanner:
         character = self.advance()
         match character:
             case TokenType.LEFT_PAREN.value:
-                self.addToken(TokenType.LEFT_PAREN, "null")
+                self.addToken(TokenType.LEFT_PAREN)
             case TokenType.RIGHT_PAREN.value:
-                self.addToken(TokenType.RIGHT_PAREN, "null")
+                self.addToken(TokenType.RIGHT_PAREN)
             case TokenType.LEFT_BRACE.value:
-                self.addToken(TokenType.LEFT_BRACE, "null")
+                self.addToken(TokenType.LEFT_BRACE)
             case TokenType.RIGHT_BRACE.value:
-                self.addToken(TokenType.RIGHT_BRACE, "null")
+                self.addToken(TokenType.RIGHT_BRACE)
             case TokenType.COMMA.value:
-                self.addToken(TokenType.COMMA, "null")
+                self.addToken(TokenType.COMMA)
             case TokenType.SEMICOLON.value:
-                self.addToken(TokenType.SEMICOLON, "null")
+                self.addToken(TokenType.SEMICOLON)
             case TokenType.DOT.value:
-                self.addToken(TokenType.DOT, "null")
+                self.addToken(TokenType.DOT)
             case TokenType.PLUS.value:
-                self.addToken(TokenType.PLUS, "null")
+                self.addToken(TokenType.PLUS)
             case TokenType.MINUS.value:
-                self.addToken(TokenType.MINUS, "null")
+                self.addToken(TokenType.MINUS)
             case TokenType.SLASH.value:
                 if self.match('/'):
                     while self.peek() != '\n' and not self.is_at_end():
                         self.advance()
                 else:
-                    self.addToken(TokenType.SLASH, "null")
+                    self.addToken(TokenType.SLASH)
             case TokenType.STAR.value:
-                self.addToken(TokenType.STAR, "null")
+                self.addToken(TokenType.STAR)
             case TokenType.BANG.value:
                 if self.match(TokenType.EQUAL.value):
                     token = TokenType.BANG_EQUAL
                 else:
                     token = TokenType.BANG
-                self.addToken(token, "null")
+                self.addToken(token)
             case TokenType.EQUAL.value:
                 if self.match(TokenType.EQUAL.value):
                     token = TokenType.EQUAL_EQUAL
                 else:
                     token = TokenType.EQUAL
-                self.addToken(token, "null")
+                self.addToken(token)
             case TokenType.LESS.value:
                 if self.match(TokenType.EQUAL.value):
                     token = TokenType.LESS_EQUAL
                 else:
                     token = TokenType.LESS
-                self.addToken(token, "null")
+                self.addToken(token)
             case TokenType.GREATER.value:
                 if self.match(TokenType.EQUAL.value):
                     token = TokenType.GREATER_EQUAL
                 else:
                     token = TokenType.GREATER
-                self.addToken(token, "null")
+                self.addToken(token)
             case ' ':
                 pass
             case '\t':
@@ -87,9 +87,23 @@ class Scanner:
                 self.string()
             case c if c in NUMBER_LITERALS:
                 self.number()
+            case c if self.isAlpha(c):
+                self.identifier()
             case _:
                 self.error_class.error(self.line, f"Unexpected character: {character}")
                 self.has_lex_error = True
+
+
+    def identifier(self):
+        while self.isAlphaNumeric(self.peek()):
+            self.advance()
+        self.addToken(TokenType.IDENTIFIER)
+
+    def isAlpha(self, character):
+        return (character >= 'a' and character <= 'z') or (character >= 'A' and character <= 'Z') or (character == '_')
+
+    def isAlphaNumeric(self, character):
+        return self.isAlpha(character) or character in NUMBER_LITERALS
 
     def string(self):
         while c:= self.peek() != '"' and not self.is_at_end():
@@ -124,7 +138,7 @@ class Scanner:
         self.current += 1
         return character
 
-    def addToken(self, token_type, literal):
+    def addToken(self, token_type, literal="null"):
         text = self.source[self.start:self.current]
         self.tokens.append(Token(token_type, text, literal, self.line))
 
