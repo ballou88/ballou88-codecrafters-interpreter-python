@@ -143,7 +143,7 @@ class Scanner:
         self.addToken(TokenType.STRING, value)
 
     def number(self):
-        while num := self.peek() in NUMBER_LITERALS:
+        while self.peek() in NUMBER_LITERALS:
             self.advance()
         if self.peek() == "." and self.peek_next() in NUMBER_LITERALS:
             self.advance()
