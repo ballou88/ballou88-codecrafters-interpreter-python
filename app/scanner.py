@@ -1,6 +1,7 @@
 from app.token_type import TokenType
 from app.token import Token
 
+NUMBER_LITERALS  = ['1','2','3','4','5','6','7','8','9','0','.']
 class Scanner:
     def __init__(self, source, error_class):
         self.source = source
@@ -84,6 +85,8 @@ class Scanner:
                 pass
             case '"':
                 self.string()
+            case c if c in NUMBER_LITERALS:
+                self.number()
             case _:
                 self.error_class.error(self.line, f"Unexpected character: {character}")
                 self.has_lex_error = True
@@ -100,6 +103,12 @@ class Scanner:
         self.advance()
         value = self.source[self.start + 1:self.current - 1]
         self.addToken(TokenType.STRING, value)
+
+    def number(self):
+        while num := self.peek() in NUMBER_LITERALS:
+            self.advance()
+        value = self.source[self.start + 1: self.current - 1]
+        self.addToken(TokenType.NUMBER, value)
 
 
     def advance(self):
