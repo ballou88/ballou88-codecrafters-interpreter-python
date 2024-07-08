@@ -14,26 +14,20 @@ class TokenType(Enum):
     SLASH = "/"
     STAR = "*"
 
-
 # One or two character tokens.
     BANG = "!"
     BANG_EQUAL = "!="
-
     EQUAL = "="
     EQUAL_EQUAL = "=="
-
     GREATER = ">"
     GREATER_EQUAL = ">="
-
     LESS = "<"
     LESS_EQUAL = "<="
-
 
 # Literals.
     IDENTIFIER = "IDENTIFIER"
     STRING = "STRING"
     NUMBER = "NUMBER"
-
 
 # Keywords.
     AND = "and"
@@ -45,7 +39,6 @@ class TokenType(Enum):
     IF = "if"
     NIL = "nil"
     OR = "or"
-
     PRINT = "print"
     RETURN = "return"
     SUPER = "super"

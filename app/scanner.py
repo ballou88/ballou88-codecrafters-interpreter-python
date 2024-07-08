@@ -2,6 +2,26 @@ from app.token_type import TokenType
 from app.token import Token
 
 NUMBER_LITERALS  = ['1','2','3','4','5','6','7','8','9','0']
+KEYWORDS = {
+    "and": TokenType.AND,
+    "or": TokenType.OR,
+    "class": TokenType.CLASS,
+    "else": TokenType.ELSE,
+    "false": TokenType.FALSE,
+    "fun": TokenType.FUN,
+    "for": TokenType.FOR,
+    "if": TokenType.IF,
+    "nil": TokenType.NIL,
+    "print": TokenType.PRINT,
+    "return": TokenType.RETURN,
+    "super": TokenType.SUPER,
+    "this": TokenType.THIS,
+    "true": TokenType.TRUE,
+    "var": TokenType.VAR,
+    "while": TokenType.WHILE,
+
+}
+
 class Scanner:
     def __init__(self, source, error_class):
         self.source = source
@@ -97,7 +117,11 @@ class Scanner:
     def identifier(self):
         while self.isAlphaNumeric(self.peek()):
             self.advance()
-        self.addToken(TokenType.IDENTIFIER)
+        text = self.source[self.start:self.current]
+        if text in KEYWORDS:
+            self.addToken(KEYWORDS[text])
+        else:
+            self.addToken(TokenType.IDENTIFIER)
 
     def isAlpha(self, character):
         return (character >= 'a' and character <= 'z') or (character >= 'A' and character <= 'Z') or (character == '_')
