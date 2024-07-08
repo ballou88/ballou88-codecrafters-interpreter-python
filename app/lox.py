@@ -1,11 +1,11 @@
 import sys
 from app.scanner import Scanner
 
+
 class Lox:
     def __init__(self, filename):
         with open(filename) as file:
             self.file_contents = file.read()
-
 
     def run(self):
         # scanner = Scanner(self.file_contents, sys.stderr)

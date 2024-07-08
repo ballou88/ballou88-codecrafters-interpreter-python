@@ -1,4 +1,5 @@
-from enum import Enum 
+from enum import Enum
+
 
 class TokenType(Enum):
     LEFT_PAREN = "("
@@ -14,7 +15,7 @@ class TokenType(Enum):
     SLASH = "/"
     STAR = "*"
 
-# One or two character tokens.
+    # One or two character tokens.
     BANG = "!"
     BANG_EQUAL = "!="
     EQUAL = "="
@@ -24,12 +25,12 @@ class TokenType(Enum):
     LESS = "<"
     LESS_EQUAL = "<="
 
-# Literals.
+    # Literals.
     IDENTIFIER = "IDENTIFIER"
     STRING = "STRING"
     NUMBER = "NUMBER"
 
-# Keywords.
+    # Keywords.
     AND = "and"
     CLASS = "class"
     ELSE = "else"
