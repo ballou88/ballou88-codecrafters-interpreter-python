@@ -6,4 +6,4 @@ class Token:
         self.line = line
 
     def __str__(self):
-        return f"{self.token_type} {self.lexeme} {self.literal}"
+        return " ".join([self.token_type.name, self.lexeme, self.literal])
