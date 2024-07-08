@@ -82,9 +82,25 @@ class Scanner:
             case '\n':
                 self.line += 1
                 pass
+            case '"':
+                self.string()
             case _:
                 self.error_class.error(self.line, f"Unexpected character: {character}")
                 self.has_lex_error = True
+
+    def string(self):
+        while c:= self.peek() != '"' and not self.is_at_end():
+            if c == '\n':
+                self.line += 1
+            self.advance()
+        if self.is_at_end():
+            self.error_class.error(self.line, "Unterminated string.")
+            self.has_lex_error = True
+            return
+        self.advance()
+        value = self.source[self.start + 1:self.current - 1]
+        self.addToken(TokenType.STRING, value)
+
 
     def advance(self):
         character = self.source[self.current]
