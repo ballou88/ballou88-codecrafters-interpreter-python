@@ -42,7 +42,11 @@ class Scanner:
             case TokenType.MINUS.value:
                 self.addToken(TokenType.MINUS, "null")
             case TokenType.SLASH.value:
-                self.addToken(TokenType.SLASH, "null")
+                if self.match('/'):
+                    while self.peek() != '\n' and not self.is_at_end():
+                        self.advance()
+                else:
+                    self.addToken(TokenType.SLASH, "null")
             case TokenType.STAR.value:
                 self.addToken(TokenType.STAR, "null")
             case TokenType.BANG.value:
@@ -69,6 +73,15 @@ class Scanner:
                 else:
                     token = TokenType.GREATER
                 self.addToken(token, "null")
+            case ' ':
+                pass
+            case '\t':
+                pass
+            case '\r':
+                pass
+            case '\n':
+                self.line += 1
+                pass
             case _:
                 self.error_class.error(self.line, f"Unexpected character: {character}")
                 self.has_lex_error = True
@@ -92,3 +105,9 @@ class Scanner:
             return False
         self.current += 1
         return True
+
+    def peek(self):
+        if self.is_at_end():
+            return '\0'
+        else:
+            return self.source[self.current]
