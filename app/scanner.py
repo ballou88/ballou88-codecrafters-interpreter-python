@@ -1,5 +1,5 @@
-from app.token_type import TokenType
 from app.token import Token
+from app.token_type import TokenType
 
 NUMBER_LITERALS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 KEYWORDS = {
